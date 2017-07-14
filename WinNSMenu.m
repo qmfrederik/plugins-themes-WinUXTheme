@@ -583,12 +583,6 @@ void delete_menu(HWND win)
       DWORD status = GetLastError();
       if (status && (status != ERROR_INVALID_HANDLE))
         NSWarnMLog(@"error processing popup menu - status: %d", status);
-      
-      // Purge the mouse click if the user clicked somewhere that caused the menu to go away...
-      [NSApp nextEventMatchingMask: NSLeftMouseDownMask | NSLeftMouseUpMask | NSMouseMovedMask
-                         untilDate: [NSDate distantFuture]
-                            inMode: NSEventTrackingRunLoopMode
-                           dequeue: YES];
     }
   else
     {
@@ -596,6 +590,12 @@ void delete_menu(HWND win)
       [self processCommand:(void*)result usingItemMap:itemMap];
     }
   
+  // Purge the mouse click if the user clicked somewhere that caused the menu to go away...
+  [NSApp nextEventMatchingMask: NSLeftMouseDownMask | NSLeftMouseUpMask | NSMouseMovedMask
+                     untilDate: [NSDate distantFuture]
+                        inMode: NSEventTrackingRunLoopMode
+                       dequeue: YES];
+
   // Cleanup...
   DestroyMenu(hmenu);
   NSFreeMapTable(itemMap);
