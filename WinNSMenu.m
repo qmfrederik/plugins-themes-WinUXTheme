@@ -592,7 +592,7 @@ void delete_menu(HWND win)
   
   // Purge the mouse click if the user clicked somewhere that caused the menu to go away...
   [NSApp nextEventMatchingMask: NSLeftMouseDownMask | NSLeftMouseUpMask | NSMouseMovedMask
-                     untilDate: [NSDate distantFuture]
+                     untilDate: [NSDate dateWithTimeIntervalSinceNow:0.1]
                         inMode: NSEventTrackingRunLoopMode
                        dequeue: YES];
 
